@@ -32,7 +32,7 @@
         var height = $(this).css({'min-height': '', height: ''});
 
         // resolve issue of using box-sizing: border-box || padding-box when getting and setting $(el).height(val);
-        height = $(this).css({'box-sizing'}) == 'content-box' ? height.height() : height.outerHeight();
+        height = $(this).css('box-sizing') == 'content-box' ? height.height() : height.outerHeight();
 
         if (height > maxheight) maxheight = height;
       });
