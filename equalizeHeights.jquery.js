@@ -23,28 +23,21 @@
 
   $.fn.equalizeHeights = function () {
 
-    if (this.length > 1) { // no point in running this on fewer than two items
+    var maxheight = 0, css;
 
-      var maxheight = 0, css;
+    $(this).each(function () {
+      // reset element height to natural in order to get real height values
+      var el = $(this).css({minHeight: ''}), height;
 
-      $(this).each(function () {
-        // reset element height to natural in order to get real height values
-        var height = $(this).css({'min-height': '', height: ''});
+      // resolve issue of using box-sizing: border-box when getting and setting $(el).height(val);
+      height = 'border-box' == $(this).css('boxSizing') ? el.outerHeight() : el.height();
 
-        // resolve issue of using box-sizing: border-box || padding-box when getting and setting $(el).height(val);
-        height = $(this).css('box-sizing') == 'content-box' ? height.height() : height.outerHeight();
+      if (height > maxheight) maxheight = height;
+    });
 
-        if (height > maxheight) maxheight = height;
-      });
+    css = {minHeight: maxheight};
 
-      css = {'min-height': maxheight};
-
-      // IE6 support - IE6 does not support min-height, so set height as well
-      if ($.browser.msie && $.browser.version == 6.0) { css.height = maxheight }
-
-      $(this).css(css);
-
-    }
+    $(this).css(css);
 
   };
 
